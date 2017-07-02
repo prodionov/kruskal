@@ -15,28 +15,25 @@ class Dis_Set(object):
         return "parent: " + str(self.parent) +"\nrank: " + str(self.rank)
     
     def find(self, i):
-        print "i:", i, "parent[i]", self.parent[i]
-        if i != self.parent[i]:
+        print "i:", i, "parent[i]", self.parent[i - 1]
+        if i != self.parent[i - 1]:
             print "we are here"
-            self.parent[i] = self.find(self.parent[i])
+            self.parent[i - 1] = self.find(self.parent[i - 1])
             print self.parent
-        return self.parent[i]
+        return self.parent[i - 1]
     
     def get_rank(self):
         return self.rank
 
     def union(self, i, j):
-        global maximum
         i_id = self.find(i)
         j_id = self.find(j)
         if i_id == j_id:
             return
         else:
-            self.parent[j_id] = i_id
-            self.rank[i_id] += self.rank[j_id]
-            self.rank[j_id] = 0
-            if self.rank[i_id] > maximum:
-                maximum = self.rank[i_id]
+            self.parent[j_id - 1] = i_id
+            self.rank[i_id - 1] += self.rank[j_id - 1]
+            self.rank[j_id - 1] = 0
 
 class Vertex():
 
